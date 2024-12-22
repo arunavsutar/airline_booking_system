@@ -1,5 +1,4 @@
-const pingRequest = require("./pingController");
-
-module.exports={
-    pingRequest,
+module.exports = {
+    pingRequest: require("./pingController"),
+    AirplaneController: require('./airplane-controller'),
 }
