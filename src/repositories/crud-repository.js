@@ -1,4 +1,5 @@
 const logger = require('../config/logger.config');
+const NotFound = require('../errors/not-found');
 class CrudRepository {
     constructor(Model) {
         this.model = Model;
@@ -16,8 +17,21 @@ class CrudRepository {
         return response;
     }
     async get(data) {
-        const response = await this.model.findByPk(data);
-        return response;
+        try {
+
+            const response = await this.model.findByPk(data);
+            if (!response) {
+                throw new NotFound(data, `The data with id:${data} not found in the db.`);
+            }
+            return response;
+        }
+        catch (error) {
+            logger.log({
+                level: 'error',
+                message: `Error Occured - ${error}`
+            });
+            throw error;
+        }
     }
     async getAll() {
         try {
