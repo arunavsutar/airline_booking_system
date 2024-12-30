@@ -47,11 +47,21 @@ class CrudRepository {
         }
     }
     async update(id, data) {   //Passed datashould be an Object.
-        const response = await this.model.update(data, {
-            where: {
-                id: id
-            }
-        });
+        try {
+            const response = await this.model.update(data, {
+                where: {
+                    id: id
+                }
+            });
+            return response;
+        }
+        catch (error) {
+            logger.log({
+                level: 'error',
+                message: `Error Occured - ${error}`
+            });
+            throw error;
+        }
     }
 }
 

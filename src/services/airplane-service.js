@@ -67,6 +67,22 @@ class AirplaneService {
             throw error;
         }
     }
+    async updateAirplane(id,data){
+        try{
+            const response = await this.airplaneRepository.update(id);
+            if (!response) {
+                throw new NotFound(id, `This ${id} is not found in the db`);
+            }
+            return response;
+        }
+        catch(error){
+            logger.log({
+                level: 'error',
+                message: `Error Occured - ${error}`
+            });
+            throw error;
+        }
+    }
 }
 
 module.exports = AirplaneService;

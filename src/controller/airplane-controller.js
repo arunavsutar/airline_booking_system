@@ -79,6 +79,25 @@ async function destroyAirplane(req, res) {
             .json(ErrorResponse);
     }
 }
+async function updateAirplane(req, res) {
+    try {
+        const response = await airplaneService.updateAirplane(req.params.id, req.body);
+        SuccessResponse.message = `Successfully updated  the Airplane with id : ${req.params.id}`;
+        SuccessResponse.data = response;
+
+        return res
+            .status(StatusCodes.OK)
+            .json(SuccessResponse);
+    } catch (error) {
+        console.log("ERROR - \n", error);
+
+        ErrorResponse.message = error.details;
+        ErrorResponse.error = error;
+        return res
+            .status(StatusCodes.NOT_FOUND)
+            .json(ErrorResponse);
+    }
+}
 
 
 module.exports = {
@@ -86,5 +105,5 @@ module.exports = {
     getAirplanes,
     getAirplane,
     destroyAirplane,
-
+    updateAirplane,
 };
